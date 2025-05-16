@@ -19,13 +19,6 @@ pipeline {
                     ls -la
                 '''
             }
-
-
-
-
-            steps {
-                echo 'Hello World'
-            }
         }
     }
 }
