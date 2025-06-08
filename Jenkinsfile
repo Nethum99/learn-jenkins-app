@@ -9,12 +9,13 @@ pipeline {
                     reuseNode true
                 }
             }
-            steps{
+x            steps{
                 sh '''
                     ls -la
                     node  --version
                     npm --version
                     npm ci
+                    npm outdated
                     npm run build
                     ls -la
                 '''
