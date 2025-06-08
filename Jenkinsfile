@@ -15,7 +15,6 @@ x            steps{
                     node  --version
                     npm --version
                     npm ci
-                    npm outdated
                     npm run build
                     ls -la
                 '''
