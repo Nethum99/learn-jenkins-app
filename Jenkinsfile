@@ -9,7 +9,7 @@ pipeline {
                     reuseNode true
                 }
             }
-x            steps{
+            steps{
                 sh '''
                     ls -la
                     node  --version
