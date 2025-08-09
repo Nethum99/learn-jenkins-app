@@ -24,7 +24,7 @@ pipeline {
 
         stage('Run Tests'){
             parallel{
-                stage('Test') {
+                stage('Unit Test') {
                      agent{
                         docker{
                             image 'node:18-alpine'
@@ -39,6 +39,11 @@ pipeline {
                             npm test
                         '''
                     }
+                    post{
+                        always{
+                            junit 'jest-results/junit.xml' 
+                        }
+                    }
                 }
 
                 stage('E2E') {
@@ -49,13 +54,13 @@ pipeline {
                         }
                     }
             
-                /*steps{
-                    echo 'Test stage'
-                    sh '''
-                        test -f build/index.html
-                        npm test
-                    '''
-                }*/
+                    /*steps{
+                        echo 'Test stage'
+                        sh '''
+                            test -f build/index.html
+                            npm test
+                        '''
+                    }*/
 
                     steps{
                         sh '''
@@ -64,7 +69,13 @@ pipeline {
                         sleep 5
                         echo "Running Playwright tests"
                         npx playwright test --reporter=html
-                    '''
+                        '''
+                    }
+
+                    post{
+                        always{
+                            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwrite HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+                        }
                     }
                 }
             }
